@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+</h:head>
+<body>
+	<h1>Provider</h1>
+	<h:form id="frmProvider">
+	FirstName: <h:inputText
+			value="#{providerController.provider.firstname}" />
+    LastName: <h:inputText
+			value="#{providerController.provider.lastname}" />
+	TelePhone: <h:inputText
+			value="#{providerController.provider.telephone}" />
+
+		<h:commandButton action="#{providerController.save}"
+			value="Save">
+			<f:ajax execute="frmProvider" render="frmProvider" />
+		</h:commandButton>
+
+		<h:commandButton rendered="#{providerController.editMode}"
+			action="#{providerController.save}" value="Cancel">
+			<f:ajax render="frmProvider"></f:ajax>
+		</h:commandButton>
+
+		<h:dataTable value="#{providerController.providers}"
+			var="p" id="dtProvider">
+			<h:column>
+				<f:facet name="header">FIRSTNAME</f:facet>
+		#{p.firstname}</h:column>
+
+			<h:column>
+				<f:facet name="header">LASTNAME</f:facet>
+		#{p.lastname}</h:column>
+
+			<h:column>
+				<f:facet name="header">TELEPHONE</f:facet>
+		#{p.telephone}</h:column>
+			<h:column>
+				<f:facet name="header">Actions</f:facet>
+				<h:commandButton action="#{providerController.delete(p)}"
+					value="Delete" onClick="return window.confirm ('Are you sure?')">
+					<f:ajax render="frmProvider:dtProvider" />
+				</h:commandButton>
+				<h:commandButton action="#{providerController.update(p)}"
+					value="Update">
+					<f:ajax render="frmProvider" />
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</body>
+</html>
